@@ -13,10 +13,13 @@ require 'jeweler'
 Jeweler::Tasks.new do |gem|
   # gem is a Gem::Specification... see http://docs.rubygems.org/read/chapter/20 for more options
   gem.name = "static_list"
-  gem.homepage = "http://github.com/yannski/static_list"
+  gem.homepage = "http://github.com/novelys/static_list"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = %q{This gem is very useful to handle static lists (like enumerations).}
+  gem.description = %q{
+    In your application you may want to handle things in your User model like sex (female, male) or other static lists.
+    You want these lists to be handled using 'textual keys' in your application but stored in your database using codes in an integer column.
+  }
   gem.email = "yann.klis@novelys.com"
   gem.authors = ["Yann Klis"]
   # Include your dependencies below. Runtime dependencies are required when using your gem,

@@ -1,19 +1,72 @@
-= static_list
+= Static List
 
-Description goes here.
+This module is very useful to handle static lists (like enumerations).
 
-== Contributing to static_list
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it
-* Fork the project
-* Start a feature/bugfix branch
-* Commit and push until you are happy with your contribution
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+== The problem:
+
+In your application you may want to handle things in your User model like sex (female, male) or other static lists.
+You want these lists to be handled using 'textual keys' in your application but stored in your database using codes in an integer column.
+You don't want to join other tables to display these information.
+You want these lists to be easily ordered, localized and translated using Rails i18n. You want view helpers to display these lists localized and validations helpers to validate the values in the 'receiving' model.
+
+Example :
+  (I want to store the hair color of the user...)
+
+(hair_color.rb)
+class HairColor
+  include StaticList::Model
+  static_list [[:white, 1], [:blond, 2], [:red, 3], [:light_brown, 4], [:brown, 5], [:black, 6], [:colored, 7], [:bald, 8]]
+end
+
+(user.rb)
+class User < ActiveRecord::Base
+  ...
+  include StaticList::Validate
+
+  validates_static_list_value :hair_color, HairColor, :allow_blank => true
+  ...
+end
+
+(application_helper.rb)
+module ApplicationHelper
+  ...
+  include StaticList::Helpers
+  ...
+end
+
+(_form.html.erb)
+...
+<%= f.select :hair_color, static_list_select_options(HairColor) %>
+...
+
+(show.html.erb)
+...
+<%= t_static_list(@user.hair_color, HairColor) %>
+...
+
+(en.yml)
+...
+hair_color:
+  white: white
+  blond: blond
+  red: red
+...
+
+(fr.yml)
+...
+hair_color:
+  white: blancs
+  blond: blonds
+  red: rouges
+...
 
 == Copyright
 
-Copyright (c) 2011 Yann Klis. See LICENSE.txt for
-further details.
+Copyright (c) 2010-2011 Novelys[http://www.novelys.com]. See LICENSE.txt for details.
+
+== Contributors
+
+* {Yann Klis}[http://github.com/yannski]
+* {Nicolas Blanco}[http://github.com/slainer68]
+* {David Bourguignon}[http://github.com/dbourguignon]
 
