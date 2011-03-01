@@ -2,6 +2,7 @@ require "spec_helper"
 
 class HairColor
   include StaticList::Model
+  include StaticList::Validate
   @@hair_color_list = [[:white, 1], [:blond, 2], [:red, 3], [:light_brown, 4], [:brown, 5], [:black, 6], [:colored, 7], [:bald, 8]]
   cattr_accessor :hair_color_list
   
@@ -68,6 +69,16 @@ describe "StaticList::Helpers" do
       StaticList::Helpers.should_receive(:t_static_list).exactly(8).times.and_return("ok")
       
       StaticList::Helpers.static_list_select_options(HairColor).should be_an(Array)
+    end
+  end
+end
+
+describe "StaticList::Validate" do
+  describe ".validates_static_list_value" do
+    it "should validate inclusion" do
+      HairColor.should_receive(:validates_inclusion_of).with(:hair_color_code, { :in => [1, 2, 3, 4, 5, 6, 7, 8] })
+      
+      HairColor.validates_static_list_value(:hair_color_code, HairColor)
     end
   end
 end
