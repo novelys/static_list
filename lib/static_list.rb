@@ -67,7 +67,7 @@ module StaticList
         static_list_codes.find {|el| el[0] == sym }[1]
       end
       
-      def t_symbol(code)
+      def t_key_from_code(code)
         "#{self.to_s.demodulize.underscore}.#{self.code_to_sym(code)}"
       end
       
@@ -90,7 +90,7 @@ module StaticList
     #
     def t_static_list(code, static_object)
       return unless code
-      t "#{static_object.to_s.demodulize.underscore}.#{static_object.code_to_sym(code)}"
+      t(static_object.t_key_from_code(code))
     end
 
     # Localizes all the static codes for select options helper
