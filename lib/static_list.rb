@@ -51,18 +51,22 @@ module StaticList
       
       # Returns the symbol associated with the code in parameter.
       #
-      # For example : HairColor.static_list_code_to_sym(0) # => :white
+      # For example : HairColor.code_to_sym(0) # => :white
       #
-      def static_list_code_to_sym(code)
+      def code_to_sym(code)
         static_list_codes.find { |el| el[1] == code }[0]
       end
       
-      def t_symbol(code)
-        "#{self.to_s.demodulize.underscore}.#{self.static_list_code_to_sym(code)}"
+      # Returns the code associated with the symbol in parameter.
+      #
+      # For example : HairColor.sym_to_code(:white) # => 0
+      #
+      def sym_to_code(sym)
+        static_list_codes.find {|el| el[0] == sym }[1]
       end
       
-      def to_code(sym)
-        static_list_codes.find { |el| el[0] == sym }[1]
+      def t_symbol(code)
+        "#{self.to_s.demodulize.underscore}.#{self.code_to_sym(code)}"
       end
       
       def static_codes
@@ -84,7 +88,7 @@ module StaticList
     #
     def t_static_list(code, static_object)
       return unless code
-      t "#{static_object.to_s.demodulize.underscore}.#{static_object.static_list_code_to_sym(code)}"
+      t "#{static_object.to_s.demodulize.underscore}.#{static_object.code_to_sym(code)}"
     end
 
     # Localizes all the static codes for select options helper
