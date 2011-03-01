@@ -1,4 +1,6 @@
-if Rails::VERSION::MAJOR < 3
+require "active_support"
+
+if ActiveSupport::VERSION::MAJOR < 3
   require "core_ext/concern"
 end
 
