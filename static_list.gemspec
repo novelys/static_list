@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{static_list}
-  s.version = "0.2.1"
+  s.version = "0.2.2"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Yann Klis"]
-  s.date = %q{2011-03-01}
+  s.date = %q{2011-05-11}
   s.description = %q{
     In your application you may want to handle things in your User model like sex (female, male) or other static lists.
     You want these lists to be handled using 'textual keys' in your application but stored in your database using codes in an integer column.
