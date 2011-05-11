@@ -1,6 +1,11 @@
 require "active_support"
 
-if ActiveSupport::VERSION::MAJOR < 3
+version =
+  if defined?(ActionPack::VERSION::MAJOR)
+    ActionPack::VERSION::MAJOR
+  end
+
+if version.blank? || version >= 3
   require "core_ext/concern"
 end
 
